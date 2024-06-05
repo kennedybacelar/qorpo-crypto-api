@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "crypto-api"
+version = "0.1.0"
+description = ""
+authors = ["Kennedy Bacelar <kennedybacelar@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+flask = {extras = ["async"], version = "^3.0.3"}
+aiohttp = "^3.9.5"
+ccxt = "^4.3.40"
+sqlalchemy = "^2.0.30"
+psycopg2-binary = "^2.9.9"
+gunicorn = "^22.0.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
