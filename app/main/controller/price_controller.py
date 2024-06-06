@@ -37,7 +37,7 @@ async def get_price(currency: str) -> float:
 
     except ccxt.BadSymbol:
         raise NotFoundException(f"Currency pair '{currency_pair_symbol}' not found")
-    
+
     finally:
         await exchange.close()
 

@@ -2,7 +2,8 @@ from datetime import datetime
 
 import pytest
 
-from app.main.controller.price_controller import delete_price_history, fetch_and_save_currency_price, get_price_history
+from app.main.controller.price_controller import (
+    delete_price_history, fetch_and_save_currency_price, get_price_history)
 from app.main.database import Currency
 
 

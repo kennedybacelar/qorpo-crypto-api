@@ -1,6 +1,7 @@
 from flask import Blueprint, current_app, jsonify, request
 
-from app.main.controller.price_controller import delete_price_history, fetch_and_save_currency_price, get_price_history
+from app.main.controller.price_controller import (
+    delete_price_history, fetch_and_save_currency_price, get_price_history)
 
 price_bp = Blueprint("price", __name__)
 
