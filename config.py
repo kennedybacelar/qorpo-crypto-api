@@ -1,11 +1,10 @@
-#import multiprocessing
+import multiprocessing
+import os
 
-#cpu_cores = multiprocessing.cpu_count()
+workers = int(os.getenv("GUNICORN_WORKERS", multiprocessing.cpu_count() * 2 + 1))
 
-workers = 2
-
-#workers = cpu_cores * 2 + 1
 max_requests = 1000
 max_requests_jitter = 50
-bind = '127.0.0.1:8000'
+
+bind = "0.0.0.0:8000"
 reload = True
