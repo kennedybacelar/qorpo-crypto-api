@@ -1,5 +1,5 @@
-from datetime import datetime
 import asyncio
+from datetime import datetime
 
 import ccxt.async_support as ccxt
 from sqlalchemy.ext.asyncio import AsyncSession
