@@ -1,4 +1,5 @@
 from datetime import datetime
+import asyncio
 
 import ccxt.async_support as ccxt
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -29,10 +30,10 @@ async def get_price(currency: str) -> float:
         exchange = ccxt.kucoin()
 
         # Fetch the ticker for the specified currency pair (e.g., 'BTC/USDT')
-        ticker = await exchange.fetch_ticker(currency_pair_symbol)
-        await exchange.close()
-
+        ticker = asyncio.create_task(exchange.fetch_ticker(currency_pair_symbol))
+        ticker = await ticker
         bid_price = ticker["bid"]
+
         return bid_price
 
     except ccxt.BadSymbol:
@@ -42,13 +43,13 @@ async def get_price(currency: str) -> float:
         await exchange.close()
 
 
-async def fetch_and_save_currency_price(currency: str, db_session: AsyncSession):
+async def fetch_and_save_currency_price(currency: str, db_session: AsyncSession) -> dict:
     currency_price = await get_price(currency)
     currency_model = CurrencyModel(currency=currency, price=currency_price)
     return await save_data_to_db(currency_model, db_session)
 
 
-async def get_price_history(db_session: AsyncSession, page: int = 1, page_size: int = 10):
+async def get_price_history(db_session: AsyncSession, page: int = 1, page_size: int = 10) -> list:
 
     offset = (page - 1) * page_size
 
@@ -60,7 +61,7 @@ async def get_price_history(db_session: AsyncSession, page: int = 1, page_size: 
     return price_history
 
 
-async def delete_price_history(db_session: AsyncSession):
+async def delete_price_history(db_session: AsyncSession) -> dict:
     count = db_session.query(Currency).delete()
     db_session.commit()
     return {"message": f"Deleted {count} rows from the PriceHistory table"}
