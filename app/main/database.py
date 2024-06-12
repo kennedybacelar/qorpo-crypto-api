@@ -37,7 +37,3 @@ def create_session():
     engine = create_engine(DATABASE_URL)
     Session = sessionmaker(bind=engine)
     return Session()
-
-
-if __name__ == "__main__":
-    init_db(connect_only=False)
